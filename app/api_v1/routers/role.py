@@ -18,9 +18,7 @@ def get_roles(
     return role.get_roles(db)
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED,
-             response_model=schemas.RoleOut
-             )
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.RoleOut)
 def create_role(
     post: schemas.RoleCreate,
     db: Session = Depends(get_db),
