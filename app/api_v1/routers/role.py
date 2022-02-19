@@ -24,7 +24,7 @@ def create_role(
     db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
 ):
-    return role.create_role(post, db)
+    return role.create_role(post, db,current_user)
 
 
 @router.get("/{id}", response_model=schemas.RoleOut)
@@ -42,7 +42,7 @@ def delete_role(
     db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
 ):
-    return role.delete_role(id, db)
+    return role.delete_role(id, db,current_user)
 
 
 @router.put("/{id}", response_model=schemas.RoleOut)
@@ -52,4 +52,4 @@ def update_role(
     db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
 ):
-    return role.update_role(id, updated_role, db)
+    return role.update_role(id, updated_role, db,current_user)

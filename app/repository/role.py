@@ -1,13 +1,18 @@
 from fastapi import status, HTTPException
 from sqlalchemy.orm import Session
 from app.config import models, schemas
-
+from app.config import utils
 
 def get_roles(db: Session):
     return db.query(models.Role).all()
 
 
-def create_role(role: schemas.RoleCreate, db: Session):
+def create_role(role: schemas.RoleCreate, db: Session,current_user: int):
+    is_admin = utils.is_admin(current_user.role_id,db)
+    if not is_admin:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='you must be an admin to create new user '
+                            )
     new_role = models.Role(**role.dict())
     db.add(new_role)
     db.commit()
@@ -25,7 +30,12 @@ def get_role(id: int, db: Session):
     return role
 
 
-def delete_role(id: int, db: Session):
+def delete_role(id: int, db: Session,current_user: int):
+    is_admin = utils.is_admin(current_user.role_id,db)
+    if not is_admin:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='you must be an admin to create new user '
+                            )
     role_query = db.query(models.Role).filter(models.Role.id == id)
 
     role = role_query.first()
@@ -40,7 +50,12 @@ def delete_role(id: int, db: Session):
     db.commit()  # Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-def update_role(id: int, updated_role: schemas.RoleUpdate, db: Session):
+def update_role(id: int, updated_role: schemas.RoleUpdate, db: Session,current_user: int):
+    is_admin = utils.is_admin(current_user.role_id,db)
+    if not is_admin:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='you must be an admin to create new user '
+                            )
     role_query = db.query(models.Role).filter(models.Role.id == id)
     role = role_query.first()
     if role is None:

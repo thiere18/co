@@ -63,6 +63,7 @@ class UserOut(BaseModel):
     username: str
     email: EmailStr
     created_at: datetime
+    updated_at: datetime
     role: RoleOutForUser
     # invoices:List[InvoiceOutUser]
     class Config:

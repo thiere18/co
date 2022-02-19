@@ -10,7 +10,7 @@ models.Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def test():
-    return {"statut": "ok"}
+    return {"status": "ok"}
 
 
 app.include_router(role.router)
