@@ -41,6 +41,7 @@ class RoleCreate(BaseModel):
 class RoleOut(RoleCreate):
     id: int
     created_at: datetime
+    updated_at: datetime
     users: List[UserOutForRole]
 
     class Config:

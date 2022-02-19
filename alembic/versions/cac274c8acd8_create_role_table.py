@@ -1,8 +1,8 @@
-"""create users
+"""create role table
 
-Revision ID: b19600d85fa0
-Revises: 
-Create Date: 2022-02-19 16:17:40.261835
+Revision ID: cac274c8acd8
+Revises: b19600d85fa0
+Create Date: 2022-02-19 20:23:57.949473
 
 """
 from alembic import op
@@ -10,19 +10,17 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "b19600d85fa0"
-down_revision = None
+revision = 'cac274c8acd8'
+down_revision = 'b19600d85fa0'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
     op.create_table(
-        "users",
+        "roles",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("username", sa.String(), nullable=False),
-        sa.Column("email", sa.String(), nullable=False),
-        sa.Column("password", sa.String(), nullable=False),
+        sa.Column("name", sa.String(), nullable=False),
         sa.Column(
             "created_at",
             sa.TIMESTAMP(timezone=True),
@@ -35,11 +33,18 @@ def upgrade():
             server_default=sa.text("now()"),
             nullable=False,
         ),
-        sa.Column("role_id", sa.Integer(), nullable=False),
+
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint("email"),
+    )
+    op.create_foreign_key(
+        "user_role_fk",
+        source_table="users",
+        referent_table="roles",
+        local_cols=["role_id"],
+        remote_cols=["id"],
+        ondelete="CASCADE",
     )
 
-
 def downgrade():
-    op.drop_table("users")
+    op.drop_table("roles")
+    

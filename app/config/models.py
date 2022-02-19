@@ -30,5 +30,5 @@ class Role(Base):
     created_at = Column(
         TIMESTAMP(timezone=True), nullable=False, server_default=text("now()")
     )
-    # deleted = Column(Boolean, server_default="False", nullable=False)
+    updated_at = Column(TIMESTAMP, server_default=text("now()"), onupdate=text("now()"))
     users = relationship("User", back_populates="role")
