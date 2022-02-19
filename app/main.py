@@ -1,15 +1,11 @@
 from fastapi import FastAPI
 from app.api_v1.routers import role, auth, user
-from app.config import models
-from app.config.database import engine
 
 app = FastAPI()
 
-# models.Base.metadata.drop_all(bind=engine)
-
 
 @app.get("/")
-def test():
+def health_check():
     return {"status": "ok"}
 
 

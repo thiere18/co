@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cac274c8acd8'
-down_revision = 'b19600d85fa0'
+revision = "cac274c8acd8"
+down_revision = "b19600d85fa0"
 branch_labels = None
 depends_on = None
 
@@ -33,7 +33,6 @@ def upgrade():
             server_default=sa.text("now()"),
             nullable=False,
         ),
-
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_foreign_key(
@@ -45,6 +44,6 @@ def upgrade():
         ondelete="CASCADE",
     )
 
+
 def downgrade():
     op.drop_table("roles")
-    

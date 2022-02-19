@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-from sqlalchemy.sql import func
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import text
@@ -16,7 +15,9 @@ class User(Base):
     created_at = Column(
         TIMESTAMP(timezone=True), nullable=False, server_default=text("now()")
     )
-    updated_at = Column(TIMESTAMP, server_default=text("now()"), onupdate=text("now()"))
+    updated_at = Column(TIMESTAMP, server_default=text("now()"),
+                        onupdate=text("now()")
+                        )
     role_id = Column(
         Integer, ForeignKey("roles.id", ondelete="CASCADE"), nullable=False
     )
@@ -30,5 +31,7 @@ class Role(Base):
     created_at = Column(
         TIMESTAMP(timezone=True), nullable=False, server_default=text("now()")
     )
-    updated_at = Column(TIMESTAMP, server_default=text("now()"), onupdate=text("now()"))
+    updated_at = Column(TIMESTAMP, server_default=text("now()"),
+                        onupdate=text("now()")
+                        )
     users = relationship("User", back_populates="role")

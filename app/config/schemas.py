@@ -66,7 +66,7 @@ class UserOut(BaseModel):
     created_at: datetime
     updated_at: datetime
     role: RoleOutForUser
-    # invoices:List[InvoiceOutUser]
+
     class Config:
         orm_mode = True
 

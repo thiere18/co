@@ -1,7 +1,7 @@
 """create users
 
 Revision ID: b19600d85fa0
-Revises: 
+Revises:
 Create Date: 2022-02-19 16:17:40.261835
 
 """
