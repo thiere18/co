@@ -25,6 +25,7 @@ def init_role() -> None:
         RoleCreate(name="admin"),
     )
 
+
 if __name__ == "__main__":
     print("Creating admin user  admin@fan.com with admin as username")
     init_role()

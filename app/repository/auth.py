@@ -7,7 +7,7 @@ from app.config import models, utils, oauth2
 
 def login(
     db: Session,
-    user_credentials: OAuth2PasswordRequestForm ,
+    user_credentials: OAuth2PasswordRequestForm,
 ):
 
     user = (

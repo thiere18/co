@@ -52,9 +52,10 @@ def get_user_role(role_id: int, db: Session = Depends(database.get_db)):
     if not role:
         raise HTTPException(status_code=404, detail="role not found")
     return role.name
-def is_admin(role_id:int, db: Session = Depends(database.get_db))->bool:
+
+
+def is_admin(role_id: int, db: Session = Depends(database.get_db)) -> bool:
     role = db.query(models.Role).filter(models.Role.id == role_id).first()
     if not role:
         raise HTTPException(status_code=404, detail="role not found")
-    return role.name=="admin"
-    
+    return role.name == "admin"
