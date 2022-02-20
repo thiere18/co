@@ -74,3 +74,9 @@ class UserOut(BaseModel):
 class UpdatePassword(BaseModel):
     actual_password: str
     new_password: str
+
+
+class SignUserIn(BaseModel):
+    username: str
+    email: EmailStr
+    password: str

@@ -9,7 +9,7 @@ from .database import Base
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, nullable=False)
-    username = Column(String(255), nullable=False)
+    username = Column(String(255), nullable=False, unique=True)
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     created_at = Column(
@@ -25,7 +25,7 @@ class User(Base):
 class Role(Base):
     __tablename__ = "roles"
     id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False, unique=True)
     created_at = Column(
         TIMESTAMP(timezone=True), nullable=False, server_default=text("now()")
     )
