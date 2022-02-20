@@ -1,7 +1,8 @@
 FROM python:3.9.7
 WORKDIR /app
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements/requirements.dev.txt ./
+COPY requirements/requirements.common.txt ./
+RUN pip install --no-cache-dir -r requirements.dev.txt
 COPY . .
 
 # ENTRYPOINT ["/bin/bash", "/app/startup.sh"]
