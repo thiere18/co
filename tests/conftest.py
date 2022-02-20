@@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import sessionmaker
 import os
-# from app import models
 from app.config.config import settings
 from app.config.database import Base, get_db
 from app.main import app
@@ -43,7 +42,7 @@ def client(session):
 
 @pytest.fixture
 def test_user(client):
-    os.system('python3 -m app.initial_data_test')
+    os.system("python3 -m app.initial_data_test")
     user_data = {
         "username": "thiere",
         "email": "thiern@gmail.com",

@@ -15,7 +15,7 @@ def create_role(role: schemas.RoleCreate, db: Session, current_user: int):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="you must be an admin user to create new user ",
         )
-    check_duplicate_role = db.query(models.Role).filter(models.Role.name == role.name)
+    check_duplicate_role = db.query(models.Role).filter(models.Role.name == role.name) # noqa
     if check_duplicate_role.first():
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
