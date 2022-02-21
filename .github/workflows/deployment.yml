@@ -21,5 +21,5 @@ jobs:
 
     - name: Building and pushing curas image
       run: |
-        docker build -t ghcr.io/sigularusrex/curas:latest -f Dockerfile.prod .
-        docker push ghcr.io/sigularusrex/curas:latest
+        docker build -t ghcr.io/sigularusrex/cura:latest -f Dockerfile.prod .
+        docker push ghcr.io/sigularusrex/cura:latest
