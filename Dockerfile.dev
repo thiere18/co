@@ -1,10 +1,13 @@
-FROM python:3.9.7
+FROM python:3.10.2
+
 WORKDIR /app
-COPY requirements/requirements.dev.txt ./
-COPY requirements/requirements.common.txt ./
-RUN pip install --no-cache-dir -r requirements.dev.txt
+COPY pyproject.toml ./
+
+ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+RUN pip3 install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install
+
 COPY . .
 
-# ENTRYPOINT ["/bin/bash", "/app/startup.sh"]
-
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

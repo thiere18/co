@@ -1,10 +1,14 @@
-FROM python:3.9.7
+FROM python:3.10.2
+LABEL org.opencontainers.image.source="https://github.com/Sigularusrex/cura"
 WORKDIR /app
-COPY requirements/requirements.prod.txt ./
-COPY requirements/requirements.common.txt ./
-RUN pip install --no-cache-dir -r requirements.prod.txt
-COPY . .
+# copy dependencies
+COPY pyproject.toml ./
 
-# ENTRYPOINT ["/bin/bash", "/app/scripts/startup.sh"]
+ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+RUN pip3 install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install
+
+COPY . .
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

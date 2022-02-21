@@ -1,0 +1,25 @@
+name: publish
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+jobs:
+  build-curas-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: Sigularusrex #${{ github.actor }}
+        password: ${{ secrets.TOKEN }}
+
+    - name: Building and pushing curas image
+      run: |
+        docker build -t ghcr.io/Sigularusrex/curas:latest -f Dockerfile.prod .
+        docker push ghcr.io/Sigularusrex/curas:latest
