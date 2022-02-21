@@ -15,7 +15,9 @@ class User(Base):
     created_at = Column(
         TIMESTAMP(timezone=True), nullable=False, server_default=text("now()")
     )
-    updated_at = Column(TIMESTAMP, server_default=text("now()"), onupdate=text("now()")) # noqa
+    updated_at = Column(
+        TIMESTAMP, server_default=text("now()"), onupdate=text("now()")
+    )  # noqa
     role_id = Column(
         Integer, ForeignKey("roles.id", ondelete="CASCADE"), nullable=False
     )
@@ -31,5 +33,5 @@ class Role(Base):
     )
     updated_at = Column(
         TIMESTAMP, server_default=text("now()"), onupdate=text("now()")
-    )
+    )  # noqa
     users = relationship("User", back_populates="role")

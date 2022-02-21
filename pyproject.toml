@@ -25,10 +25,6 @@ python-multipart = "^0.0.5"
 pytest = "^7.0.0"
 black = "^22.1.0"
 flake8 = "^4.0.1"
-pre-commit = "^2.17.0"
-isort = "^5.10.1"
-flake8-isort = "^4.1.1"
-"pdfminer.six" = "^20211012"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
