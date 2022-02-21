@@ -11,4 +11,4 @@ def health_check():
 
 app.include_router(role.router)
 app.include_router(auth.router)
-app.include_router(user.router)
+app.include_router(user.r)
