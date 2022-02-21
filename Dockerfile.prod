@@ -1,5 +1,5 @@
 FROM python:3.10.2
-LABEL org.opencontainers.image.source="https://github.com/sigularusrex/cura"
+LABEL org.opencontainers.image.source https://github.com/Sigularusrex/cura
 WORKDIR /app
 # copy dependencies
 COPY pyproject.toml ./
