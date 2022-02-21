@@ -16,7 +16,7 @@ def test_root(client):
 def test_create_user(client):
     os.system("python3 -m app.initial_data_test")
     res = client.post(
-        f"{base_api}/users/signup",
+        f"{base_api}/users/sig",
         json={
             "username": "thierno",
             "email": "thierno@gmail.com",

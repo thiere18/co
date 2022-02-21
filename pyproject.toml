@@ -18,6 +18,7 @@ jose = "^1.0.0"
 python-jose = "^3.3.0"
 alembic = "^1.7.6"
 python-multipart = "^0.0.5"
+pytest = "^7.0.1"
 
 
 

@@ -48,7 +48,7 @@ def test_user(client):
         "email": "thiern@gmail.com",
         "password": "thierno",
     }
-    res = client.post("/api/v1/users/signup", json=user_data)
+    res = client.post("/api/v1/users/sig", json=user_data)
     assert res.status_code == 201
     new_user = res.json()
     new_user["password"] = user_data["password"]
