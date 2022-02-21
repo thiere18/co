@@ -18,7 +18,7 @@ def create_user(
     return u.create_user(user, db, current_user)
 
 
-@router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut )  # noqa
+@router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut ) # noqa
 def Sign_up_user(
     user: schemas.SignUserIn,
     db: Session = Depends(get_db),
