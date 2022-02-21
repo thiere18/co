@@ -4,10 +4,10 @@ from app.config import schemas, oauth2
 from app.config.database import get_db
 from app.repository import user as u
 
-router = APIRouter(prefix="/api/v1/users", tags=["Users"])
+r = APIRouter(prefix="/api/v1/users", tags=["Users"])
 
 
-@router.post(
+@r.post(
     "/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut
 )  # noqa
 def create_user(
@@ -18,7 +18,9 @@ def create_user(
     return u.create_user(user, db, current_user)
 
 
-@router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut ) # noqa
+@r.post(
+    "/sig", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut
+)  # noqa
 def Sign_up_user(
     user: schemas.SignUserIn,
     db: Session = Depends(get_db),
@@ -27,7 +29,7 @@ def Sign_up_user(
     return u.sign_up(user, db)
 
 
-@router.get("/{id}", response_model=schemas.UserOut)
+@r.get("/{id}", response_model=schemas.UserOut)
 def get_user(
     id: int,
     db: Session = Depends(get_db),
