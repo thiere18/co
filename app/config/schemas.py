@@ -1,13 +1,13 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 
 
 class UserCreate(BaseModel):
     username: str
     email: EmailStr
     password: str
-    role_id: int
+    role: str
 
 
 class UserLogin(BaseModel):
@@ -25,47 +25,13 @@ class TokenData(BaseModel):
     id: Optional[str] = None
 
 
-class UserOutForRole(BaseModel):
-    id: int
-    username: str
-    email: EmailStr
-
-    class Config:
-        orm_mode = True
-
-
-class RoleCreate(BaseModel):
-    name: str
-
-
-class RoleOut(RoleCreate):
-    id: int
-    created_at: datetime
-    updated_at: datetime
-    users: List[UserOutForRole]
-
-    class Config:
-        orm_mode = True
-
-
-class RoleUpdate(RoleCreate):
-    pass
-
-
-class RoleOutForUser(RoleCreate):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-
 class UserOut(BaseModel):
     id: int
     username: str
     email: EmailStr
     created_at: datetime
     updated_at: datetime
-    role: RoleOutForUser
+    role: str
 
     class Config:
         orm_mode = True

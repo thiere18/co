@@ -19,14 +19,14 @@ def verify(plain_password, hashed_password):
 #     return pwd_context.hash(password)
 
 
-def create_role(db: Session, role: schemas.RoleCreate):
-    db_role = models.Role(
-        name=role.name,
-    )
-    db.add(db_role)
-    db.commit()
-    db.refresh(db_role)
-    return db_role
+# def create_role(db: Session, role: schemas.RoleCreate):
+#     db_role = models.Role(
+#         name=role.name,
+#     )
+#     db.add(db_role)
+#     db.commit()
+#     db.refresh(db_role)
+#     return db_role
 
 
 def create_user(db: Session, user: schemas.UserCreate):
@@ -38,7 +38,7 @@ def create_user(db: Session, user: schemas.UserCreate):
         username=user.username,
         email=user.email,
         password=hash(user.password),
-        role_id=user.role_id,
+        role=user.role,
     )
     db.add(db_user)
     db.commit()

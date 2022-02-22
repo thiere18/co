@@ -14,9 +14,9 @@ def test_root(client):
 
 
 def test_create_user(client):
-    os.system("python3 -m app.initial_data_test")
+    os.system("make init_test")
     res = client.post(
-        f"{base_api}/users/sig",
+        f"{base_api}/users/signup",
         json={
             "username": "thierno",
             "email": "thierno@gmail.com",
@@ -61,24 +61,23 @@ def test_incorrect_user(test_user, client, email, password, status_code):
     res = client.post(
         f"{base_api}/login", data={"username": email, "password": password}
     )
-    # assert res.json().get('detail')=="Invalid Credentials"
     assert res.status_code == status_code
 
 
-# @pytest.mark.parametrize(
-#     "actual_password, new_password, status_code",
-#     [("worng_pass", "bearer", 403), ("thierno", "good_pass", 200)],
-# )
-# def test_correct_incorrect_user_reset(
-#     test_user, authorized_client, actual_password, new_password, status_code
-# ):
-#     data = {"actual_password": actual_password, "new_password": new_password}
-#     res = authorized_client.put(f"{base_api}/users/edit", json=data)
-#     assert res.status_code == status_code
+@pytest.mark.parametrize(
+    "actual_password, new_password, status_code",
+    [("worng_pass", "bearer", 403), ("thierno", "good_pass", 200)],
+)
+def test_correct_incorrect_user_reset(
+    test_user, authorized_client, actual_password, new_password, status_code
+):
+    data = {"actual_password": actual_password, "new_password": new_password}
+    res = authorized_client.put(f"{base_api}/users/{test_user['id']}", json=data)
+    assert res.status_code == status_code
 
 
-# def test_unauthenticated_user_reset(client):
-#     data = {"actual_password": "howwwe", "new_password": "new_password"}
-#     res = client.put(f"{base_api}/users/edit", json=data)
-#     assert res.status_code == 401
-#     assert res.json().get("detail") == "Not authenticated"
+def test_unauthenticated_user_reset_password(client):
+    data = {"actual_password": "howwwe", "new_password": "new_password"}
+    res = client.put(f"{base_api}/users/1", json=data)
+    assert res.status_code == 401
+    assert res.json().get("detail") == "Not authenticated"

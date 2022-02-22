@@ -1,7 +1,7 @@
 version: "3"
 services:
   api:
-    image: ghcr.io/Sigularusrex/curas:latest
+    image: ghcr.io/sigularusrex/cura:latest
     ports:
       - 8000:8000
     environment:

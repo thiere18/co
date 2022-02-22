@@ -5,8 +5,8 @@ from app.config import models, schemas, utils
 
 def create_user(user: schemas.UserCreate, db: Session, current_user: int):
 
-    is_admin = utils.is_admin(current_user.role_id, db)
-    if not is_admin:
+    role = current_user.role
+    if role != "ADMIN":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="you must be an admin user to create new user ",
@@ -58,15 +58,8 @@ def sign_up(user: schemas.SignUserIn, db: Session):
         )
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
-    user_role = (
-        db.query(models.Role).filter(models.Role.name == "normal").first()
-    )  # noqa
-    if not user_role:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Not allowed to register ",
-        )
-    new_user = models.User(role_id=user_role.id, **user.dict())
+    user_role = "NORMAL"
+    new_user = models.User(role=user_role, **user.dict())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -86,29 +79,45 @@ def get_user(id: int, db: Session):
 
 
 def update_password(
-    id: int, updated_role: schemas.RoleUpdate, db: Session, current_user: int
+    id: int,
+    updated_password: schemas.UpdatePassword,
+    db: Session,
 ):
-    is_admin = utils.is_admin(current_user.role_id, db)
-    if not is_admin:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="you must be an admin to create new user ",
-        )
-    role_query = db.query(models.Role).filter(models.Role.id == id)
-    role = role_query.first()
-    if role is None:
+
+    user_query = db.query(models.User).filter(models.User.id == id)
+    user = user_query.first()
+    if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"role with id: {id} does not exist",
+            detail=f"user with id: {id} does not exist",
         )
-    check_duplicate_role = db.query(models.Role).filter(
-        models.Role.name == updated_role.name
-    )  # noqa
-    if check_duplicate_role.first():
+    if not utils.verify(updated_password.actual_password, user.password):
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail=f"role {updated_role.name} already exist",
+            status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials"
         )
-    role_query.update(updated_role.dict(), synchronize_session=False)
+    hashed_password = utils.hash(updated_password.new_password)
+    user.password = hashed_password
     db.commit()
-    return role_query.first()
+    return user
+
+
+def delete_user(id: int, db: Session, current_user: int):
+    user_query = db.query(models.User).filter(models.User.id == id)
+    user = user_query.first()
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"user with id: {id} does not exist",
+        )
+    if id != current_user.id and current_user.role != " ADMIN":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="You are not allowed to allowed to delete this user",
+        )  # noqa
+    if user.username == "admin":
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="this is the master user can't delete this user",
+        )  # noqa
+    user_query.delete(synchronize_session=False)
+    db.commit()

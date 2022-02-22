@@ -1,19 +1,11 @@
 #!/usr/bin/env python3
 
 from tests.database import TestingSessionLocal
-from app.config.schemas import UserCreate, RoleCreate
-from app.config.utils import create_user, create_role
+from app.config.schemas import UserCreate
+from app.config.utils import create_user
 
 db = TestingSessionLocal()
-primary_role = ["admin", "normal"]
-
-
-def init_role() -> None:
-    for role in primary_role:
-        create_role(
-            db,
-            RoleCreate(name=role),
-        )
+primary_role = ["ADMIN", "NORMAL"]
 
 
 def init_user() -> None:
@@ -23,11 +15,10 @@ def init_user() -> None:
             username="admin",
             email="admin@fan.com",
             password="password",
-            role_id=1,
+            role="ADMIN",
         ),
     )
 
 
 if __name__ == "__main__":
-    init_role()
     init_user()

@@ -42,13 +42,13 @@ def client(session):
 
 @pytest.fixture
 def test_user(client):
-    os.system("python3 -m app.initial_data_test")
+    os.system("make init_test")
     user_data = {
         "username": "thiere",
         "email": "thiern@gmail.com",
         "password": "thierno",
     }
-    res = client.post("/api/v1/users/sig", json=user_data)
+    res = client.post("/api/v1/users/signup", json=user_data)
     assert res.status_code == 201
     new_user = res.json()
     new_user["password"] = user_data["password"]
