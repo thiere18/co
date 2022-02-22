@@ -34,7 +34,6 @@ def get_user(
     id: int,
     db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
-
 ):
 
     return u.get_user(id, db)
@@ -42,7 +41,9 @@ def get_user(
 
 @router.put("/{id}", response_model=schemas.UserOut)
 def update_password(
-    id: int, update_password: schemas.UpdatePassword, db: Session = Depends(get_db),
+    id: int,
+    update_password: schemas.UpdatePassword,
+    db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
 ):  # noqa
     return u.update_password(id, update_password, db)
@@ -51,7 +52,5 @@ def update_password(
 @router.delete("/{id}")
 def delete_user(
     id: int, db: Session = Depends(get_db), current_user: int = Depends(get_db)
-
-
 ):
     return u.delete_user(id, db, current_user)
