@@ -10,6 +10,7 @@ class UserBase(BaseModel):
     first_name: str = None
     last_name: str = None
 
+
 class UserOut(UserBase):
     email: str
     is_active: bool = True
@@ -18,14 +19,13 @@ class UserOut(UserBase):
     last_name: str = None
     created_at: datetime
     updated_at: datetime
-    role: str
+    role: str 
     pass
 
 
 class UserCreate(UserBase):
-    role: str
+    role: str = None
     password: str
-
 
     class Config:
         orm_mode = True

@@ -31,16 +31,22 @@ def upgrade():
             "updated_at",
             sa.TIMESTAMP(timezone=True),
             server_default=sa.text("now()"),
-            nullable=False),
-        sa.Column("role", sa.Enum("ADMIN", "NORMAL", "RESTRICTED", name="role"), nullable=False ,server_default=sa.text("NORMAL")),
+            nullable=False,
+        ),
+        sa.Column(
+            "role",
+            sa.Enum("ADMIN", "NORMAL", "RESTRICTED", name="role"),
+            nullable=False,
+            server_default=sa.text("NORMAL"),
+        ),
         sa.Column(
             "created_at",
             sa.TIMESTAMP(timezone=True),
             server_default=sa.text("now()"),
-            nullable=False,)
+            nullable=False,
+        ),
     )
 
-        
 
 def downgrade():
     op.drop_table("user")
