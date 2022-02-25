@@ -22,4 +22,4 @@ class User(Base):
     updated_at = Column(
         TIMESTAMP, server_default=text("now()"), onupdate=text("now()")
     )  # noqa
-    role = Column(ENUM("ADMIN", "NORMAL", "RESTRICTED", name="role"), nullable=False)
+    role = Column(ENUM("ADMIN", "NORMAL", "RESTRICTED", name="role"), default="NORMAL", nullable=False)
