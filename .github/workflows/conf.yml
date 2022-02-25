@@ -21,7 +21,7 @@ jobs:
       - name: pulling git repo
         uses: actions/checkout@v2
       - name: Building Docker Image and run the test
-        run: make bash scripts/test.sh
+        run: bash scripts/test.sh
 
   build-cura-image:
     runs-on: ubuntu-latest
