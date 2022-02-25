@@ -39,7 +39,7 @@ def test_resignup(client, test_user, monkeypatch):
         data={
             "username": test_user.email,
             "password": "password_hashing_is_skipped_via_monkey_patch",
-            'role': 'NORMAL'
+            "role": "NORMAL",
         },
     )
     assert response.status_code == 409

@@ -19,7 +19,7 @@ class UserOut(UserBase):
     last_name: str = None
     created_at: datetime
     updated_at: datetime
-    role: str 
+    role: str
     pass
 
 
