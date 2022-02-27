@@ -9,8 +9,8 @@ services:
     image: postgres:12
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '5432:5432'
     volumes:
@@ -20,8 +20,8 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@curas.com
-      - PGADMIN_DEFAULT_PASSWORD=password
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - 5050:80
     depends_on:
@@ -47,16 +47,11 @@ services:
       - redis
       - celery_worker
   backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile
+    image: ghcr.io/sigularusrex/cura:latest
     command: python app/main.py
     tty: true
     ports:
       - 8000:8000
-    volumes:
-      - ./backend:/app/:cached
-      - ./.docker/.ipython:/root/.ipython:cached
     environment:
       PYTHONPATH: .
       DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres'

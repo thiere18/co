@@ -37,7 +37,6 @@ def upgrade():
             "role",
             sa.Enum("ADMIN", "NORMAL", "RESTRICTED", name="role"),
             nullable=False,
-            server_default=sa.text("NORMAL"),
         ),
         sa.Column(
             "created_at",

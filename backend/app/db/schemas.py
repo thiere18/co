@@ -1,4 +1,3 @@
-from datetime import datetime
 from pydantic import BaseModel
 import typing as t
 
@@ -9,6 +8,7 @@ class UserBase(BaseModel):
     is_superuser: bool = False
     first_name: str = None
     last_name: str = None
+    role: str = None
 
 
 class UserOut(UserBase):
@@ -17,14 +17,10 @@ class UserOut(UserBase):
     is_superuser: bool = False
     first_name: str = None
     last_name: str = None
-    created_at: datetime
-    updated_at: datetime
-    role: str
     pass
 
 
 class UserCreate(UserBase):
-    role: str = None
     password: str
 
     class Config:
@@ -40,6 +36,7 @@ class UserEdit(UserBase):
 
 class User(UserBase):
     id: int
+    role: str
 
     class Config:
         orm_mode = True
