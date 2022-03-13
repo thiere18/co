@@ -23,7 +23,7 @@ class User(Base):
         TIMESTAMP(timezone=False), server_default=text("now()"), onupdate=text("now()")
     )  # noqa
     role = Column(
-        ENUM("ADMIN", "NORMAL", "RESTRICTED", name="role"),
+        ENUM("ADMIN", "NORMAL", "RESTRICTED", name="role_status"),
         default="NORMAL",
         nullable=False,
     )

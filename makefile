@@ -7,3 +7,5 @@ run_tests:
 dev:
 	docker-compose up --build
 
+build_prod:
+	bash scripts/build_prod.sh
