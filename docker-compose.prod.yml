@@ -24,8 +24,9 @@ services:
 
   flower:  
     image: mher/flower
-    command: celery --broker=redis://redis:6379/0 flower --port=5555
-
+    command: celery --broker=${REDIS_URL} flower --port=5555
+    environment:
+      REDIS_URL: 'redis://redis:6379/0'
     ports:  
         - 5555:5555
     depends_on:
@@ -41,3 +42,4 @@ services:
     environment:
       PYTHONPATH: .
       DATABASE_URL: 'postgresql://curas_admin@curass:tlo4413!E@curass.postgres.database.azure.com:5432/cura'
+      REDIS_URL: 'redis://redis:6379/0'
