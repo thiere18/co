@@ -20,10 +20,7 @@ async def login(db=Depends(get_db), form_data: OAuth2PasswordRequestForm = Depen
         )
 
     access_token_expires = timedelta(minutes=security.ACCESS_TOKEN_EXPIRE_MINUTES)
-    if user.is_superuser:
-        permissions = "admin"
-    else:
-        permissions = "user"
+    permissions = "admin" if user.is_superuser else "user"
     access_token = security.create_access_token(
         data={"sub": user.email, "permissions": permissions},
         expires_delta=access_token_expires,
@@ -43,10 +40,7 @@ async def signup(db=Depends(get_db), form_data: OAuth2PasswordRequestForm = Depe
         )
 
     access_token_expires = timedelta(minutes=security.ACCESS_TOKEN_EXPIRE_MINUTES)
-    if user.is_superuser:
-        permissions = "admin"
-    else:
-        permissions = "user"
+    permissions = "admin" if user.is_superuser else "user"
     access_token = security.create_access_token(
         data={"sub": user.email, "permissions": permissions},
         expires_delta=access_token_expires,

@@ -1,13 +1,14 @@
-from fastapi import FastAPI, Depends
-from starlette.requests import Request
+from fastapi import FastAPI, Depends, Request, Response
 import uvicorn
-
+import os
 from app.api.api_v1.routers.users import users_router
 from app.api.api_v1.routers.auth import auth_router
 from app.core import config
 from app.db.session import SessionLocal
 from app.core.auth import get_current_active_user
 from app.core.celery_app import celery_app
+from fastapi_redis_cache import FastApiRedisCache, cache
+from sqlalchemy.orm import Session
 
 
 app = FastAPI(title=config.PROJECT_NAME, docs_url="/api/docs", openapi_url="/api")
@@ -22,6 +23,7 @@ async def db_session_middleware(request: Request, call_next):
 
 
 @app.get("/api/v1")
+@cache()
 async def root():
     return {"message": "Hello World"}
 
@@ -41,6 +43,18 @@ app.include_router(
     dependencies=[Depends(get_current_active_user)],
 )
 app.include_router(auth_router, prefix="/api", tags=["auth"])
+
+
+@app.on_event("startup")
+def startup():
+    redis_cache = FastApiRedisCache()
+    redis_cache.init(
+        host_url=os.environ.get("REDIS_URL"),
+        prefix="myapi-cache",
+        response_header="X-MyAPI-Cache",
+        ignore_arg_types=[Request, Response, Session],
+    )
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", reload=True, port=8000)
