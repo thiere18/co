@@ -1,3 +1,5 @@
+
+   
 version: '3.7'
 services:
   redis:
@@ -38,9 +40,8 @@ services:
 
   flower:  
     image: mher/flower
-    command: celery --broker=${REDIS_URL} flower --port=5555
-    environment:
-      REDIS_URL: 'redis://redis:6379/0'
+    command: celery --broker=redis://redis:6379/0 flower --port=5555
+
     ports:  
         - 5555:5555
     depends_on:
@@ -61,10 +62,8 @@ services:
     environment:
       PYTHONPATH: .
       DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres'
-      REDIS_URL: 'redis://redis:6379/0'
     depends_on:
       - postgres
-
 
 volumes:
   db-data:

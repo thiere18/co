@@ -1,12 +1,11 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 import typing as t
-from fastapi_redis_cache import cache
+
 from . import models, schemas
 from app.core.security import get_password_hash
 
 
-@cache(expire=3600)
 def get_user(db: Session, user_id: int):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if not user:
@@ -14,12 +13,10 @@ def get_user(db: Session, user_id: int):
     return user
 
 
-@cache(expire=3600)
 def get_user_by_email(db: Session, email: str) -> schemas.UserBase:
     return db.query(models.User).filter(models.User.email == email).first()
 
 
-@cache(expire=30)
 def get_users(db: Session, skip: int = 0, limit: int = 100) -> t.List[schemas.UserOut]:
     return db.query(models.User).offset(skip).limit(limit).all()
 

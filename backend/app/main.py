@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Depends, Request, Response
 import uvicorn
-import os
 from app.api.api_v1.routers.users import users_router
 from app.api.api_v1.routers.auth import auth_router
 from app.core import config
@@ -49,7 +48,7 @@ app.include_router(auth_router, prefix="/api", tags=["auth"])
 def startup():
     redis_cache = FastApiRedisCache()
     redis_cache.init(
-        host_url=os.environ.get("REDIS_URL"),
+        host_url="redis://redis:6379/0",
         prefix="myapi-cache",
         response_header="X-MyAPI-Cache",
         ignore_arg_types=[Request, Response, Session],

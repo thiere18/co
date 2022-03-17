@@ -75,7 +75,7 @@ make run_tests
 ### Backend Tests
 
 ```
-docker-compose run backend pytest
+docker-compose -f dokcer-com run backend pytest
 ```
 
 any arguments to pytest can also be passed after this command
