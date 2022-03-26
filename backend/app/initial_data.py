@@ -12,14 +12,14 @@ def init() -> None:
         create_user(
             db,
             UserCreate(
-                email="admin@curascuras.com",
+                email="admin@curas.com",
                 password="password",
                 is_active=True,
                 is_superuser=True,
                 role="ADMIN",
             ),
         )
-        print("Creating superuser admin@curascuras.com")
+        print("Creating superuser admin@curas.com")
         print("Superuser created")
     except Exception:
         print("User created creating")
