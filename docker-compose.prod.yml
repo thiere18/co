@@ -41,5 +41,6 @@ services:
       - 8000:8000
     environment:
       PYTHONPATH: .
-      DATABASE_URL: 'postgresql://curas_admin@curass:tlo4413!E@curass.postgres.database.azure.com:5432/cura'
+      DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres'
+
       REDIS_URL: 'redis://redis:6379/0'
