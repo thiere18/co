@@ -34,7 +34,7 @@ services:
       - redis
       - celery_worker
   backend:
-    image: ghcr.io/sigularusrex/cura:latest
+    image: ghcr.io/thiere18/co:latest
     command: python app/main.py
     tty: true
     ports:
