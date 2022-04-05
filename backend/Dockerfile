@@ -1,6 +1,6 @@
   
 FROM python:3.8
-LABEL org.opencontainers.image.source https://github.com/sigularusrex/cura
+LABEL org.opencontainers.image.source https://github.com/thiere18/co
 
 RUN mkdir /app
 WORKDIR /app
