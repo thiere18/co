@@ -41,5 +41,5 @@ jobs:
     - name: Building and pushing cura image
       run: |
         cd backend
-        docker build -t ghcr.io/thiere18/colatest .
+        docker build -t ghcr.io/thiere18/co:latest .
         docker push ghcr.io/thiere18/co:latest
