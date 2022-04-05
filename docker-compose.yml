@@ -25,7 +25,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@curas.com
       - PGADMIN_DEFAULT_PASSWORD=password
     ports:
-      - 5050:80
+      - 5050:5050
     depends_on:
       - postgres
 
