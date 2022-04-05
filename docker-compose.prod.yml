@@ -11,7 +11,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@example.com
       - PGADMIN_DEFAULT_PASSWORD=password
     ports:
-      - 5050:80
+      - 5050:5050
     depends_on:
       - postgres
 
@@ -38,7 +38,7 @@ services:
     command: python app/main.py
     tty: true
     ports:
-      - 8000:8000
+      - 8000:80
     environment:
       PYTHONPATH: .
       DATABASE_URL: 'postgresql://postgres:password@postgres:5432/postgres'
