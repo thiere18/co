@@ -16,7 +16,7 @@ services:
       - postgres
 
   celery_worker:
-    image: ghcr.io/sigularusrex/cura:latest
+    image: ghcr.io/thiere18/cura:latest
     command: celery --app app.tasks worker --loglevel=DEBUG -Q main-queue -c 1
     depends_on:
       - backend
