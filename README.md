@@ -9,7 +9,7 @@ Starting the project with hot-reloading enabled
 (the first time it will take a while):
 
 ```bash
-docker-compose up -d
+docker-compose up -d 
 ```
 
 To run the alembic migrations (for the users table):
