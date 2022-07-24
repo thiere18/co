@@ -31,14 +31,6 @@ http://localhost:8000/api/docs
 docker-compose build
 ```
 
-### Restarting containers:
-
-```
-docker-compose restart
-```
-
-### Bringing containers down:
-
 ```
 docker-compose down
 ```
